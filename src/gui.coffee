@@ -24,11 +24,3 @@ class Gui
     $(".form-signin").remove()
 
   userClickedSubmit: (email, password) =>
-
-  loginUser: (user) =>
-    $(".main").empty()
-
-  loginError: (user) =>
-    alert('wrong password')
-
-
