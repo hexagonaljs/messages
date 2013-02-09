@@ -3,16 +3,18 @@
 #<< use_case
 #<< gui
 #<< glue
+#<< models/*
 
 class App
   constructor: ->
     useCase      = new UseCase()
     gui          = new Gui()
-    localStorage = new LocalStorage("app")
-    glue         = new Glue(useCase, gui, localStorage)
-    
+    messages     = new Messages()
+    storage      = new LocalStorage()
+    glue         = new Glue(useCase, gui, storage)
+
     useCase.start()
     window.useCase = useCase
 
-new App()
+window.app = new App()
 

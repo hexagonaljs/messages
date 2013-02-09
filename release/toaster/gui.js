@@ -4,17 +4,17 @@ var Gui,
 Gui = (function() {
 
   function Gui() {
-    this.hideGreetMessage = __bind(this.hideGreetMessage, this);
+    this.loginError = __bind(this.loginError, this);
 
-    this.restartClicked = __bind(this.restartClicked, this);
+    this.loginUser = __bind(this.loginUser, this);
 
-    this.showGreetMessage = __bind(this.showGreetMessage, this);
+    this.userClickedSubmit = __bind(this.userClickedSubmit, this);
 
-    this.hideAskForName = __bind(this.hideAskForName, this);
+    this.removeLoginForm = __bind(this.removeLoginForm, this);
 
-    this.confirmNameButtonClicked = __bind(this.confirmNameButtonClicked, this);
+    this.showLoginPanel = __bind(this.showLoginPanel, this);
 
-    this.showAskForName = __bind(this.showAskForName, this);
+    this.showMessages = __bind(this.showMessages, this);
 
     this.createElementFor = __bind(this.createElementFor, this);
 
@@ -28,40 +28,40 @@ Gui = (function() {
     return element = $(html);
   };
 
-  Gui.prototype.showAskForName = function() {
-    var confirmNameButton, element,
-      _this = this;
-    element = this.createElementFor("#ask-for-name-template");
-    $(".main").append(element);
-    confirmNameButton = $("#confirm-name-button");
-    confirmNameButton.click(function() {
-      return _this.confirmNameButtonClicked($("#name-input").val());
+  Gui.prototype.showMessages = function(messages) {
+    var element;
+    element = this.createElementFor("#messages-template", {
+      messages: messages.toJSON()
     });
-    return $("#name-input").focus();
+    return $('.main').append(element);
   };
 
-  Gui.prototype.confirmNameButtonClicked = function(name) {};
-
-  Gui.prototype.hideAskForName = function() {
-    return $(".ask-for-name").remove();
-  };
-
-  Gui.prototype.showGreetMessage = function(name) {
+  Gui.prototype.showLoginPanel = function() {
     var element,
       _this = this;
-    element = this.createElementFor("#greet-message-template", {
-      name: name
-    });
-    $(".main").append(element);
-    return $("#restart-link").click(function() {
-      return _this.restartClicked();
+    element = this.createElementFor("#login-from");
+    $('.main').append(element);
+    return element.find("#login-button").click(function() {
+      var email, password;
+      email = element.find("#email-address").val();
+      password = element.find("#password").val();
+      _this.userClickedSubmit(email, password);
+      return false;
     });
   };
 
-  Gui.prototype.restartClicked = function() {};
+  Gui.prototype.removeLoginForm = function(user) {
+    return $(".form-signin").remove();
+  };
 
-  Gui.prototype.hideGreetMessage = function() {
-    return $(".greet-message").remove();
+  Gui.prototype.userClickedSubmit = function(email, password) {};
+
+  Gui.prototype.loginUser = function(user) {
+    return $(".main").empty();
+  };
+
+  Gui.prototype.loginError = function(user) {
+    return alert('wrong password');
   };
 
   return Gui;

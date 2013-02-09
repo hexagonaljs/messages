@@ -6,25 +6,29 @@ class Gui
     template = Handlebars.compile(source)
     html = template(data)
     element = $(html)
-  
-  showAskForName: =>
-    element = @createElementFor("#ask-for-name-template")
-    $(".main").append(element)
-    confirmNameButton = $("#confirm-name-button")
-    confirmNameButton.click( => @confirmNameButtonClicked($("#name-input").val()))
-    $("#name-input").focus()
-    
-  confirmNameButtonClicked: (name) =>
+ 
+  showMessages: (messages) =>
+    element = @createElementFor("#messages-template", {messages : messages.toJSON()})
+    $('.main').append(element)
 
-  hideAskForName: =>
-    $(".ask-for-name").remove()
+  showLoginPanel: =>
+    element = @createElementFor("#login-from")
+    $('.main').append(element)
+    element.find("#login-button").click =>
+      email     = element.find("#email-address").val()
+      password  = element.find("#password").val()
+      @userClickedSubmit(email, password)
+      false
 
-  showGreetMessage: (name) =>
-    element = @createElementFor("#greet-message-template", {name : name})
-    $(".main").append(element)
-    $("#restart-link").click( => @restartClicked())
+  removeLoginForm: (user) =>
+    $(".form-signin").remove()
 
-  restartClicked: =>
+  userClickedSubmit: (email, password) =>
 
-  hideGreetMessage: =>
-    $(".greet-message").remove()
+  loginUser: (user) =>
+    $(".main").empty()
+
+  loginError: (user) =>
+    alert('wrong password')
+
+

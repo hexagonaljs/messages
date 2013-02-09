@@ -7,23 +7,20 @@ Glue = (function() {
     this.useCase = useCase;
     this.gui = gui;
     this.storage = storage;
-    After(this.useCase, "askForName", function() {
-      return _this.gui.showAskForName();
+    After(this.useCase, 'loginRequired', function() {
+      return _this.gui.showLoginPanel();
     });
-    After(this.useCase, "nameProvided", function() {
-      return _this.gui.hideAskForName();
+    After(this.gui, 'userClickedSubmit', function(email, password) {
+      return _this.useCase.loginUser(email, password);
     });
-    After(this.useCase, "greetUser", function(name) {
-      return _this.gui.showGreetMessage(name);
+    After(this.useCase, 'loginSuccess', function(user) {
+      return _this.storage.loadMessages();
     });
-    After(this.useCase, "restart", function() {
-      return _this.gui.hideGreetMessage();
+    After(this.useCase, 'loginSuccess', function(user) {
+      return _this.gui.removeLoginForm(user);
     });
-    After(this.gui, "restartClicked", function() {
-      return _this.useCase.restart();
-    });
-    After(this.gui, "confirmNameButtonClicked", function(name) {
-      return _this.useCase.nameProvided(name);
+    After(this.storage, 'messagesLoaded', function(messages) {
+      return _this.gui.showMessages(messages);
     });
     LogAll(this.useCase);
     LogAll(this.gui);

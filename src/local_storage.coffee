@@ -1,17 +1,23 @@
 class LocalStorage
-  constructor: (@namespace) ->
+  constructor: ->
+    @set('messages', new Messages)
 
   set: (key, value) =>
     console.log(value)
-    $.jStorage.set("#{@namespace}/#{key}", value)
+    @[key] = value
 
   get: (key) =>
-    $.jStorage.get("#{@namespace}/#{key}")
+    @[key]
 
   remove: (key) =>
-    $.jStorage.deleteKey("#{@namespace}/#{key}")
+    @[key] = undefined
 
   flush: =>
     for key in $.jStorage.index()
-      if key.match("^#{@namespace}")
-        $.jStorage.deleteKey(key)
+      $.jStorage.deleteKey(key)
+
+  loadMessages: =>
+    @get('messages').fetch
+      success: (collection) => @messagesLoaded(collection)
+
+  messagesLoaded: (collection) =>

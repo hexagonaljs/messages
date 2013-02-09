@@ -4,32 +4,68 @@ var UseCase,
 UseCase = (function() {
 
   function UseCase() {
-    this.restart = __bind(this.restart, this);
+    this.loginFail = __bind(this.loginFail, this);
 
-    this.greetUser = __bind(this.greetUser, this);
+    this.loginSuccess = __bind(this.loginSuccess, this);
 
-    this.nameProvided = __bind(this.nameProvided, this);
+    this.loginUser = __bind(this.loginUser, this);
 
-    this.askForName = __bind(this.askForName, this);
+    this.currentUser = __bind(this.currentUser, this);
+
+    this.loginRequired = __bind(this.loginRequired, this);
+
+    this.loadData = __bind(this.loadData, this);
+
+    this.checkLogin = __bind(this.checkLogin, this);
+
+    this.setMessages = __bind(this.setMessages, this);
 
     this.start = __bind(this.start, this);
 
   }
 
   UseCase.prototype.start = function() {
-    return this.askForName();
+    return this.checkLogin();
   };
 
-  UseCase.prototype.askForName = function() {};
+  UseCase.prototype.setMessages = function(messages) {};
 
-  UseCase.prototype.nameProvided = function(name) {
-    return this.greetUser(name);
+  UseCase.prototype.checkLogin = function() {
+    if (this.currentUser()) {
+      return this.loadData();
+    } else {
+      return this.loginRequired();
+    }
   };
 
-  UseCase.prototype.greetUser = function(name) {};
+  UseCase.prototype.loadData = function() {};
 
-  UseCase.prototype.restart = function() {
-    return this.askForName();
+  UseCase.prototype.loginRequired = function() {};
+
+  UseCase.prototype.currentUser = function() {
+    return this.user;
+  };
+
+  UseCase.prototype.loginUser = function(email, password) {
+    var user,
+      _this = this;
+    user = new User(email, password);
+    return user.login({
+      success: function(user) {
+        return _this.loginSuccess(user);
+      },
+      fail: function(user) {
+        return _this.loginFail(user);
+      }
+    });
+  };
+
+  UseCase.prototype.loginSuccess = function(user) {
+    return this.user = user;
+  };
+
+  UseCase.prototype.loginFail = function(user) {
+    return this.user = false;
   };
 
   return UseCase;

@@ -1,15 +1,35 @@
 class UseCase
   constructor: ->
-    
+
   start: =>
-    @askForName()
+    @checkLogin()
 
-  askForName: =>
+  setMessages: (messages) =>
 
-  nameProvided: (name) =>
-    @greetUser(name)
+  checkLogin: =>
+    if @currentUser()
+      @loadData()
+    else
+      @loginRequired()
 
-  greetUser: (name) =>
+  loadData: =>
 
-  restart: =>
-    @askForName()
+  loginRequired: =>
+
+  currentUser: =>
+    @user
+
+  loginUser: (email, password) =>
+    user = new User(email, password)
+    user.login
+      success:(user) => @loginSuccess(user)
+      fail: (user) => @loginFail(user)
+
+  loginSuccess: (user) =>
+    @user = user
+
+  loginFail: (user) =>
+    @user = false
+
+
+

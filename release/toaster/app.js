@@ -3,11 +3,12 @@ var App;
 App = (function() {
 
   function App() {
-    var glue, gui, localStorage, useCase;
+    var glue, gui, messages, storage, useCase;
     useCase = new UseCase();
     gui = new Gui();
-    localStorage = new LocalStorage("app");
-    glue = new Glue(useCase, gui, localStorage);
+    messages = new Messages();
+    storage = new LocalStorage();
+    glue = new Glue(useCase, gui, storage);
     useCase.start();
     window.useCase = useCase;
   }
@@ -16,4 +17,4 @@ App = (function() {
 
 })();
 
-new App();
+window.app = new App();
