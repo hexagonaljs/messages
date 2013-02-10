@@ -14,8 +14,6 @@ UseCase = (function() {
 
     this.loginRequired = __bind(this.loginRequired, this);
 
-    this.loadData = __bind(this.loadData, this);
-
     this.checkLogin = __bind(this.checkLogin, this);
 
     this.setMessages = __bind(this.setMessages, this);
@@ -31,14 +29,10 @@ UseCase = (function() {
   UseCase.prototype.setMessages = function(messages) {};
 
   UseCase.prototype.checkLogin = function() {
-    if (this.currentUser()) {
-      return this.loadData();
-    } else {
+    if (!this.currentUser()) {
       return this.loginRequired();
     }
   };
-
-  UseCase.prototype.loadData = function() {};
 
   UseCase.prototype.loginRequired = function() {};
 

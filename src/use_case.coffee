@@ -7,12 +7,8 @@ class UseCase
   setMessages: (messages) =>
 
   checkLogin: =>
-    if @currentUser()
-      @loadData()
-    else
+    unless @currentUser()
       @loginRequired()
-
-  loadData: =>
 
   loginRequired: =>
 

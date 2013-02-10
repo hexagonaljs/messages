@@ -4,10 +4,6 @@ var Gui,
 Gui = (function() {
 
   function Gui() {
-    this.loginError = __bind(this.loginError, this);
-
-    this.loginUser = __bind(this.loginUser, this);
-
     this.userClickedSubmit = __bind(this.userClickedSubmit, this);
 
     this.removeLoginForm = __bind(this.removeLoginForm, this);
@@ -55,14 +51,6 @@ Gui = (function() {
   };
 
   Gui.prototype.userClickedSubmit = function(email, password) {};
-
-  Gui.prototype.loginUser = function(user) {
-    return $(".main").empty();
-  };
-
-  Gui.prototype.loginError = function(user) {
-    return alert('wrong password');
-  };
 
   return Gui;
 
