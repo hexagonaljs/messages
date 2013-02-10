@@ -21,3 +21,10 @@ class LocalStorage
       success: (collection) => @messagesLoaded(collection)
 
   messagesLoaded: (collection) =>
+
+  saveMessage: (data) =>
+    message = @get('messages').create(data.getValue())
+    message.save
+      success: (message) => @messageSaved(message)
+
+  messageSaved: (message) =>

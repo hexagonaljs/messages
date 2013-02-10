@@ -27,6 +27,6 @@ class UseCase
   loginFail: (user) =>
     @user = false
 
+  sendMessageButton: (data) =>
+
   markMessageAsRead: (message) =>
-
-

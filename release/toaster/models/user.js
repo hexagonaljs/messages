@@ -10,7 +10,7 @@ this.User = (function() {
   }
 
   User.prototype.login = function(options) {
-    if (this.email === "admin@example.com" && this.password === "admin") {
+    if (true) {
       if (options.success) {
         return options.success(this);
       }

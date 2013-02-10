@@ -9,20 +9,38 @@ class Gui
 
   showMessage: (message) ->
     element = @createElementFor("#message-modal", message.toJSON())
-    element.modal()
-    $('.main').append(element)
-    element.show()
+    $('body').append(element)
+    element.modal('show')
 
   showMessages: (messages) ->
     container = @createElementFor("#messages-container")
+    list      = container.find('.messages-list')
 
     messages.each (message) =>
       element = @createElementFor("#message-template", message.toJSON())
       element.find('.message-title').click =>
         @messageClicked(message)
-      container.append(element)
+      list.prepend(element)
 
+    container.find('button').click =>
+      @showMessageFrom()
+
+    $('.main').empty()
     $('.main').append(container)
+
+  showMessageFrom: ->
+    form    = @messageForm()
+    element = @createElementFor("#new-message-modal")
+    element.find('.modal-body').append(form.el)
+
+    element.find('#send-message-button').click =>
+      @sendMessageButtonClicked(form)
+      element.modal('hide')
+
+    $('body').append(element)
+    element.modal('show')
+
+  sendMessageButtonClicked: (data) =>
 
   messageClicked: (message) =>
 
@@ -34,6 +52,14 @@ class Gui
       password  = element.find("#password").val()
       @userClickedSubmit(email, password)
       false
+
+  messageForm: ->
+    form = new Backbone.Form
+      schema:
+        from:    'Text',
+        title: 'Text',
+        body:  'TextArea'
+    form.render()
 
   removeLoginForm: (user) =>
     $(".form-signin").remove()

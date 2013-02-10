@@ -12,6 +12,8 @@ Gui = (function() {
 
     this.messageClicked = __bind(this.messageClicked, this);
 
+    this.sendMessageButtonClicked = __bind(this.sendMessageButtonClicked, this);
+
     this.createElementFor = __bind(this.createElementFor, this);
 
   }
@@ -27,25 +29,45 @@ Gui = (function() {
   Gui.prototype.showMessage = function(message) {
     var element;
     element = this.createElementFor("#message-modal", message.toJSON());
-    element.modal();
-    $('.main').append(element);
-    return element.show();
+    $('body').append(element);
+    return element.modal('show');
   };
 
   Gui.prototype.showMessages = function(messages) {
-    var container,
+    var container, list,
       _this = this;
     container = this.createElementFor("#messages-container");
+    list = container.find('.messages-list');
     messages.each(function(message) {
       var element;
       element = _this.createElementFor("#message-template", message.toJSON());
       element.find('.message-title').click(function() {
         return _this.messageClicked(message);
       });
-      return container.append(element);
+      return list.prepend(element);
     });
+    container.find('button').click(function() {
+      return _this.showMessageFrom();
+    });
+    $('.main').empty();
     return $('.main').append(container);
   };
+
+  Gui.prototype.showMessageFrom = function() {
+    var element, form,
+      _this = this;
+    form = this.messageForm();
+    element = this.createElementFor("#new-message-modal");
+    element.find('.modal-body').append(form.el);
+    element.find('#send-message-button').click(function() {
+      _this.sendMessageButtonClicked(form);
+      return element.modal('hide');
+    });
+    $('body').append(element);
+    return element.modal('show');
+  };
+
+  Gui.prototype.sendMessageButtonClicked = function(data) {};
 
   Gui.prototype.messageClicked = function(message) {};
 
@@ -61,6 +83,18 @@ Gui = (function() {
       _this.userClickedSubmit(email, password);
       return false;
     });
+  };
+
+  Gui.prototype.messageForm = function() {
+    var form;
+    form = new Backbone.Form({
+      schema: {
+        from: 'Text',
+        title: 'Text',
+        body: 'TextArea'
+      }
+    });
+    return form.render();
   };
 
   Gui.prototype.removeLoginForm = function(user) {

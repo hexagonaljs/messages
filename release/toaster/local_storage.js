@@ -4,6 +4,10 @@ var LocalStorage,
 LocalStorage = (function() {
 
   function LocalStorage() {
+    this.messageSaved = __bind(this.messageSaved, this);
+
+    this.saveMessage = __bind(this.saveMessage, this);
+
     this.messagesLoaded = __bind(this.messagesLoaded, this);
 
     this.loadMessages = __bind(this.loadMessages, this);
@@ -52,6 +56,19 @@ LocalStorage = (function() {
   };
 
   LocalStorage.prototype.messagesLoaded = function(collection) {};
+
+  LocalStorage.prototype.saveMessage = function(data) {
+    var message,
+      _this = this;
+    message = this.get('messages').create(data.getValue());
+    return message.save({
+      success: function(message) {
+        return _this.messageSaved(message);
+      }
+    });
+  };
+
+  LocalStorage.prototype.messageSaved = function(message) {};
 
   return LocalStorage;
 

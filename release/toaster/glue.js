@@ -28,6 +28,15 @@ Glue = (function() {
     After(this.useCase, 'markMessageAsRead', function(message) {
       return _this.gui.showMessage(message);
     });
+    After(this.gui, 'sendMessageButtonClicked', function(data) {
+      return _this.useCase.sendMessageButton(data);
+    });
+    After(this.useCase, 'sendMessageButton', function(data) {
+      return _this.storage.saveMessage(data);
+    });
+    After(this.storage, 'saveMessage', function(message) {
+      return _this.storage.loadMessages();
+    });
     LogAll(this.useCase);
     LogAll(this.gui);
   }
