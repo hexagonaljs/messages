@@ -10,7 +10,7 @@ Gui = (function() {
 
     this.showLoginPanel = __bind(this.showLoginPanel, this);
 
-    this.showMessages = __bind(this.showMessages, this);
+    this.messageClicked = __bind(this.messageClicked, this);
 
     this.createElementFor = __bind(this.createElementFor, this);
 
@@ -24,13 +24,30 @@ Gui = (function() {
     return element = $(html);
   };
 
-  Gui.prototype.showMessages = function(messages) {
+  Gui.prototype.showMessage = function(message) {
     var element;
-    element = this.createElementFor("#messages-template", {
-      messages: messages.toJSON()
-    });
-    return $('.main').append(element);
+    element = this.createElementFor("#message-modal", message.toJSON());
+    element.modal();
+    $('.main').append(element);
+    return element.show();
   };
+
+  Gui.prototype.showMessages = function(messages) {
+    var container,
+      _this = this;
+    container = this.createElementFor("#messages-container");
+    messages.each(function(message) {
+      var element;
+      element = _this.createElementFor("#message-template", message.toJSON());
+      element.find('.message-title').click(function() {
+        return _this.messageClicked(message);
+      });
+      return container.append(element);
+    });
+    return $('.main').append(container);
+  };
+
+  Gui.prototype.messageClicked = function(message) {};
 
   Gui.prototype.showLoginPanel = function() {
     var element,

@@ -4,6 +4,8 @@ var UseCase,
 UseCase = (function() {
 
   function UseCase() {
+    this.markMessageAsRead = __bind(this.markMessageAsRead, this);
+
     this.loginFail = __bind(this.loginFail, this);
 
     this.loginSuccess = __bind(this.loginSuccess, this);
@@ -61,6 +63,8 @@ UseCase = (function() {
   UseCase.prototype.loginFail = function(user) {
     return this.user = false;
   };
+
+  UseCase.prototype.markMessageAsRead = function(message) {};
 
   return UseCase;
 

@@ -6,27 +6,39 @@
     <meta charset="utf-8" />
     <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
+    <link href="css/bootstrap-modal.css" rel="stylesheet" type="text/css" />
     <link href="css/base.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
 
-<script type="x-handlebars-template" id="messages-template">
-    <div class="ask-for-name">
-        {{#each messages}}
-        <div class="message">
-            <div class="from">
-                {{this.from}}
-            </div>
-            <div class="title">
-                {{title}}
-            </div>
-            <div class="body">
-                {{body}}
-            </div>
-        </div>
-        {{/each}}
+<script type="x-handlebars-template" id="messages-container">
+  <div class="row">
+  </div>
+</script>
+
+<script type="x-handlebars-template" id="message-template">
+  <div class="span3">
+    <h3>{{from}}</h3>
+  </div>
+  <div class="span9">
+    <h3><a class='message-title' href="#">{{title}}</a></h3>
+  </div>
+</script>
+
+<script type="x-handlebars-template" id="message-modal">
+  <div class="modal hide">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h3>{{title}}</h3>
     </div>
+    <div class="modal-body">
+    <p>{{body}}</p>
+    </div>
+    <div class="modal-footer">
+      <a href="#" class="btn">Close</a>
+    </div>
+  </div>
 </script>
 
 <script type="x-handlebars-template" id="login-from">
@@ -65,5 +77,6 @@
 <script src="vendors/YouAreDaBomb.js" type="text/javascript"></script>
 <script src="vendors/backbone.js" type="text/javascript"></script>
 <script src="vendors/backbone.localStorage-min.js" type="text/javascript"></script>
+<script src="vendors/bootstrap-modal.js" type="text/javascript"></script>
 <script src="release/app-debug.js" type="text/javascript"></script>
 </html>

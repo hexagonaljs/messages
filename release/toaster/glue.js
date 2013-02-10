@@ -22,6 +22,12 @@ Glue = (function() {
     After(this.storage, 'messagesLoaded', function(messages) {
       return _this.gui.showMessages(messages);
     });
+    After(this.gui, 'messageClicked', function(message) {
+      return _this.useCase.markMessageAsRead(message);
+    });
+    After(this.useCase, 'markMessageAsRead', function(message) {
+      return _this.gui.showMessage(message);
+    });
     LogAll(this.useCase);
     LogAll(this.gui);
   }
