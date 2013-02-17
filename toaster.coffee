@@ -9,7 +9,7 @@ toast 'src'
 
 	# => OPTIONS (optional, default values listed)
 	bare: true
-	packaging: true
+	packaging: false
 	expose: 'window'
 	# minify: true
 
